@@ -1,0 +1,42 @@
+/* Estilos da página nuvemshop: escopados em .pg-nuvemshop e keyframes prefixados */
+body:has(.pg-nuvemshop){margin:0;background:#F7F8FC;color:#1B2140;-webkit-font-smoothing:antialiased}
+.pg-nuvemshop a{color:inherit;text-decoration:none}
+.pg-nuvemshop a:hover{color:#2C3357}
+.pg-nuvemshop :focus-visible{outline:2px solid #2C3357;outline-offset:3px}
+@keyframes nuvemshop-nv-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes nuvemshop-nv-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes nuvemshop-nv-pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes nuvemshop-nv-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes nuvemshop-nv-swap{0%,30%{transform:translateY(0)}40%,70%{transform:translateY(calc(100% + 10px))}80%,100%{transform:translateY(0)}}
+@keyframes nuvemshop-nv-swap2{0%,30%{transform:translateY(0)}40%,70%{transform:translateY(calc(-100% - 10px))}80%,100%{transform:translateY(0)}}
+@keyframes nuvemshop-nv-cursor{0%,25%{transform:translate(0,0)}35%,65%{transform:translate(0,58px)}75%,100%{transform:translate(0,0)}}
+@keyframes nuvemshop-nv-color{0%,45%{background:#DDE1F0}55%,95%{background:#D9F36A}100%{background:#DDE1F0}}
+@keyframes nuvemshop-nv-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.pg-nuvemshop .nv-btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
+.pg-nuvemshop .nv-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px rgba(44,51,87,.6)}
+.pg-nuvemshop .nv-card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.pg-nuvemshop .nv-card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -30px rgba(44,51,87,.45)}
+.pg-nuvemshop .nv-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
+.pg-nuvemshop .nv-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.pg-nuvemshop .nv-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.pg-nuvemshop .nv-feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pg-nuvemshop .nv-cta-txt{display:inline}
+.pg-nuvemshop details summary{list-style:none;cursor:pointer}
+.pg-nuvemshop details summary::-webkit-details-marker{display:none}
+.pg-nuvemshop details[open] .nv-plus{transform:rotate(45deg)}
+.pg-nuvemshop .nv-plus{transition:transform .3s}
+@media (max-width:1000px){
+.pg-nuvemshop .nv-hero,.pg-nuvemshop .nv-2{grid-template-columns:minmax(0,1fr);gap:40px}
+.pg-nuvemshop .nv-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+.pg-nuvemshop .nv-4,.pg-nuvemshop .nv-feat{grid-template-columns:minmax(0,1fr)}
+.pg-nuvemshop .nv-cta-txt{display:none}
+.pg-nuvemshop .nv-ctas>a{flex:1 1 100%;justify-content:center;text-align:center}
+.pg-nuvemshop .nv-pad{padding:28px!important;border-radius:24px!important}
+}
+
+@keyframes nuvemshop-nv-ring{to{transform:rotate(360deg)}}
+.pg-nuvemshop .nv-ck{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.pg-nuvemshop .nv-ck{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.pg-nuvemshop .nv-ck{grid-template-columns:minmax(0,1fr)}}

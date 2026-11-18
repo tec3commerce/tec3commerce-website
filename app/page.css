@@ -1,0 +1,59 @@
+/* Estilos da página index: escopados em .pg-index e keyframes prefixados */
+body:has(.pg-index){margin:0;background:#F5F4FA;color:#16172B;-webkit-font-smoothing:antialiased}
+.pg-index a{color:#16172B;text-decoration:none}
+.pg-index a:hover{color:#5B4FB0}
+@keyframes index-t3-in{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes index-t3-rot{0%,14%{transform:translateY(0)}20%,34%{transform:translateY(-16.6667%)}40%,54%{transform:translateY(-33.3333%)}60%,74%{transform:translateY(-50%)}80%,94%{transform:translateY(-66.6667%)}100%{transform:translateY(-83.3333%)}}
+@keyframes index-t3-mark{from{background-size:0% 34%}to{background-size:100% 34%}}
+@keyframes index-t3-up{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes index-t3-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes index-t3-travel{0%{left:0%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes index-t3-pulse{0%{box-shadow:0 0 0 0 rgba(179,18,63,.55)}70%{box-shadow:0 0 0 12px rgba(179,18,63,0)}100%{box-shadow:0 0 0 0 rgba(179,18,63,0)}}
+@keyframes index-t3-blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes index-t3-spin{to{transform:rotate(360deg)}}
+@keyframes index-t3-float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-12px) rotate(-3deg)}}
+.pg-index .t3-btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),background .25s,box-shadow .25s}
+.pg-index .t3-btn:hover{transform:translateY(-2px)}
+.pg-index .t3-dark:hover{color:#D9F36A;box-shadow:0 10px 30px -10px rgba(22,23,43,.5)}
+.pg-index .t3-ghost:hover{background:#16172B;color:#F5F4FA}
+.pg-index .t3-tile{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.pg-index .t3-tile:hover{transform:translateY(-6px);box-shadow:0 24px 50px -28px rgba(38,42,96,.45)}
+.pg-index .t3-link{background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;transition:background-size .3s}
+.pg-index .t3-link:hover{background-size:100% 1.5px}
+.pg-index .t3-nav-links{display:flex}
+.pg-index .t3-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+.pg-index .t3-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.pg-index .t3-bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pg-index .t3-span2{grid-column:span 2}
+.pg-index .t3-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.pg-index .t3-teca{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
+.pg-index .t3-teca4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.pg-index .t3-founder{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:center}
+.pg-index .t3-foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:40px}
+.pg-index .t3-burger{display:none}
+.pg-index .t3-menu-link:active{transform:scale(.98)}
+@media (max-width:1020px){
+.pg-index .t3-nav-links{display:none}
+.pg-index .t3-nav-cta{display:none!important}
+.pg-index .t3-burger{display:inline-flex}
+.pg-index .t3-pad{padding:28px!important;min-height:0!important;border-radius:24px!important}
+.pg-index .t3-mock{margin-bottom:-28px!important}
+.pg-index .t3-float{width:84px!important;height:84px!important;right:-8px!important;top:-26px!important;border-radius:22px!important}
+.pg-index .t3-float img{width:44px!important}
+.pg-index .t3-hero,.pg-index .t3-teca,.pg-index .t3-founder{grid-template-columns:minmax(0,1fr)}
+.pg-index .t3-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pg-index .t3-bento{grid-template-columns:minmax(0,1fr)}
+.pg-index .t3-span2{grid-column:auto}
+.pg-index .t3-teca4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pg-index .t3-foot{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+.pg-index .t3-two,.pg-index .t3-teca4,.pg-index .t3-foot{grid-template-columns:minmax(0,1fr)}
+.pg-index .t3-ctas>a{flex:1 1 100%;justify-content:center;text-align:center}
+.pg-index .t3-node{width:60px!important;height:60px!important;border-radius:18px!important}
+.pg-index .t3-node svg{width:24px;height:24px}
+.pg-index .t3-nodelabel{font-size:12px!important}
+.pg-index .t3-flowline{left:30px!important;right:30px!important}
+.pg-index .t3-console{height:280px!important}
+.pg-index .t3-sec{padding-top:72px!important}
+}
