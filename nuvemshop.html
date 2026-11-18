@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tec3 × Nuvemshop · Implantação</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..800;1,300..800&amp;display=swap">
+<style>
+body{margin:0;background:#F7F8FC;color:#1B2140;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+a:hover{color:#2C3357}
+*{box-sizing:border-box}
+:focus-visible{outline:2px solid #2C3357;outline-offset:3px}
+@keyframes nv-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes nv-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes nv-pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes nv-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes nv-swap{0%,30%{transform:translateY(0)}40%,70%{transform:translateY(calc(100% + 10px))}80%,100%{transform:translateY(0)}}
+@keyframes nv-swap2{0%,30%{transform:translateY(0)}40%,70%{transform:translateY(calc(-100% - 10px))}80%,100%{transform:translateY(0)}}
+@keyframes nv-cursor{0%,25%{transform:translate(0,0)}35%,65%{transform:translate(0,58px)}75%,100%{transform:translate(0,0)}}
+@keyframes nv-color{0%,45%{background:#DDE1F0}55%,95%{background:#D9F36A}100%{background:#DDE1F0}}
+@keyframes nv-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.nv-btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
+.nv-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px rgba(44,51,87,.6)}
+.nv-card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.nv-card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -30px rgba(44,51,87,.45)}
+.nv-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
+.nv-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.nv-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.nv-feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.nv-cta-txt{display:inline}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+details[open] .nv-plus{transform:rotate(45deg)}
+.nv-plus{transition:transform .3s}
+@media (max-width:1000px){
+.nv-hero,.nv-2{grid-template-columns:minmax(0,1fr);gap:40px}
+.nv-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+.nv-4,.nv-feat{grid-template-columns:minmax(0,1fr)}
+.nv-cta-txt{display:none}
+.nv-ctas>a{flex:1 1 100%;justify-content:center;text-align:center}
+.nv-pad{padding:28px!important;border-radius:24px!important}
+}
+
+@keyframes t3-menu{from{opacity:0}to{opacity:1}}
+@keyframes t3-item{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.t3x-link{background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;transition:background-size .3s,color .2s;padding:6px 0}
+.t3x-link:hover,.t3x-link[aria-current="page"]{background-size:100% 1.5px}
+.t3x-nav{display:flex}
+.t3x-burger{display:none}
+.t3x-pill{transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+.t3x-pill:hover{transform:translateY(-2px)}
+@media (max-width:1180px){.t3x-nav{display:none!important}.t3x-burger{display:inline-flex!important}}
+@media (max-width:640px){.t3x-cta{display:none!important}}
+
+@keyframes nv-ring{to{transform:rotate(360deg)}}
+.nv-ck{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.nv-ck{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.nv-ck{grid-template-columns:minmax(0,1fr)}}
+</style>
+</helmet>
+
+<div style="font-family:'Nexa','Montserrat',system-ui,sans-serif;background:#F7F8FC;color:#1B2140;min-height:100vh;overflow-x:hidden">
+
+
+<header style="position:sticky;top:0;z-index:40;background:rgba(245,244,250,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(22,23,43,.08);font-family:'Nexa','Montserrat',system-ui,sans-serif">
+  <nav aria-label="Principal" style="max-width:1320px;margin:0 auto;padding:14px clamp(20px,3vw,40px);display:flex;align-items:center;gap:26px">
+    <a href="index.html" aria-label="Tec3 Commerce, início" style="display:flex;align-items:center;flex:0 0 auto"><img src="assets/logo-tec3.png" alt="Tec3 Commerce" style="height:32px;width:auto;display:block"></a>
+    <div class="t3x-nav" style="align-items:center;gap:22px;font-size:15px;font-weight:500;color:#16172B">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5"><a class="t3x-link" href="{{ n.href }}" aria-current="{{ n.current }}" style="color:{{ n.fg }};white-space:nowrap">{{ n.label }}</a></sc-for>
+      <a class="t3x-pill" href="connect.html" aria-current="{{ connectCurrent }}" style="display:inline-flex;align-items:center;gap:8px;background:{{ connectBg }};color:{{ connectFg }};border-radius:100px;padding:9px 16px;font-weight:700;white-space:nowrap"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="9"></circle></svg>TEC3 Connect</a>
+    </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+      <a class="t3x-cta t3x-pill" href="{{ wa }}" style="background:#16172B;color:#F5F4FA;border-radius:100px;padding:12px 20px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:8px;white-space:nowrap">Fale com a gente</a>
+      <button class="t3x-burger" type="button" onClick="{{ openMenu }}" aria-label="Abrir menu" aria-expanded="{{ menuExpanded }}" style="width:48px;height:48px;border-radius:50%;border:1.5px solid #16172B;background:transparent;color:#16172B;align-items:center;justify-content:center;cursor:pointer;padding:0">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h10"></path></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-label="Menu" style="position:fixed;inset:0;z-index:60;background:#F5F4FA;display:flex;flex-direction:column;animation:t3-menu .3s ease both;background-image:radial-gradient(rgba(38,42,96,.12) 1px,transparent 1.2px);background-size:26px 26px;font-family:'Nexa','Montserrat',system-ui,sans-serif;color:#16172B">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(22,23,43,.08)">
+      <img src="assets/logo-tec3.png" alt="Tec3 Commerce" style="height:30px;width:auto">
+      <button type="button" onClick="{{ closeMenu }}" aria-label="Fechar menu" style="width:48px;height:48px;border-radius:50%;border:none;background:#16172B;color:#F5F4FA;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <nav aria-label="Menu mobile" style="flex:1;overflow-y:auto;padding:12px 20px;display:flex;flex-direction:column">
+      <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="8">
+        <a href="{{ m.href }}" onClick="{{ closeMenu }}" aria-current="{{ m.current }}" style="display:flex;align-items:center;justify-content:space-between;padding:15px 0;border-bottom:1px solid rgba(22,23,43,.1);font-size:28px;font-weight:700;letter-spacing:-.015em;color:{{ m.fg }};animation:t3-item .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:{{ m.delay }}">
+          <span>{{ m.label }}</span>
+          <span style="font-size:13px;font-weight:500;color:#5B4FB0">{{ m.n }}</span>
+        </a>
+      </sc-for>
+    </nav>
+    <div style="padding:14px 20px 26px;display:flex;flex-direction:column;gap:10px;animation:t3-item .5s .4s cubic-bezier(.2,.7,.2,1) both">
+      <a href="{{ wa }}" onClick="{{ closeMenu }}" style="background:#16172B;color:#F5F4FA;border-radius:100px;padding:17px;font-size:17px;font-weight:600;text-align:center">Fale com a gente no WhatsApp</a>
+      <a href="index.html#area" onClick="{{ closeMenu }}" style="border:1.5px solid #16172B;border-radius:100px;padding:15px;font-size:16px;font-weight:600;text-align:center">Área do cliente</a>
+    </div>
+  </div>
+</sc-if>
+
+
+<main>
+<!-- HERO -->
+<section style="background:#2C3357;color:#FFFFFF;position:relative;overflow:hidden">
+  <svg aria-hidden="true" viewBox="0 0 600 400" style="position:absolute;right:-140px;top:-60px;width:min(900px,120vw);height:auto;opacity:.12;animation:nv-ring 80s linear infinite;transform-origin:50% 50%"><circle cx="220" cy="200" r="150" fill="none" stroke="#FFFFFF" stroke-width="22"></circle><circle cx="380" cy="200" r="150" fill="none" stroke="#FFFFFF" stroke-width="22"></circle></svg>
+  <div style="position:relative;max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,4vw,48px) clamp(56px,7vw,104px)">
+    <div style="animation:nv-in .8s both;display:flex;flex-wrap:wrap;align-items:center;gap:22px">
+      <img src="assets/logo-nuvemshop-branco.png" alt="Nuvemshop" style="height:clamp(72px,9vw,120px);width:auto;display:block">
+      <span style="width:1px;height:64px;background:rgba(255,255,255,.3)"></span>
+      <span style="font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#C9CEE6;max-width:220px;line-height:1.4">Agência parceira oficial<br>Tec3 Commerce</span>
+    </div>
+    <div class="nv-hero" style="margin-top:48px">
+      <div>
+        <h1 style="animation:nv-in .9s .1s cubic-bezier(.2,.7,.2,1) both;margin:0;font-size:clamp(42px,6.2vw,92px);line-height:1;letter-spacing:-.02em;font-weight:700">Plataforma e agência <span style="background-image:linear-gradient(#D9F36A,#D9F36A);background-repeat:no-repeat;background-position:0 88%;background-size:100% 26%">do mesmo lado</span>.</h1>
+        <p style="animation:nv-in .9s .2s cubic-bezier(.2,.7,.2,1) both;margin:26px 0 0;max-width:560px;font-size:19px;line-height:1.6;color:rgba(255,255,255,.82)">Quando quem implanta a sua loja é parceira da plataforma, você ganha segurança: conhecimento de dentro, benefícios exclusivos e alguém que continua junto depois do go-live.</p>
+        <div class="nv-ctas" style="animation:nv-in .9s .3s cubic-bezier(.2,.7,.2,1) both;margin-top:36px;display:flex;flex-wrap:wrap;gap:12px">
+          <a class="nv-btn" href="{{ wa }}" style="background:#FFFFFF;color:#2C3357;border-radius:100px;padding:18px 28px;font-size:17px;font-weight:700;display:inline-flex">Quero minha loja na Nuvemshop</a>
+          <a href="#implantacao" style="border:1.5px solid rgba(255,255,255,.6);color:#FFFFFF;border-radius:100px;padding:17px 26px;font-size:17px;font-weight:600;display:inline-flex">Como é a implantação</a>
+        </div>
+      </div>
+      <div aria-hidden="true" style="position:relative;max-width:500px;width:100%;justify-self:center">
+        <svg viewBox="0 0 520 400" style="width:100%;height:auto;display:block;overflow:visible">
+          <circle cx="190" cy="200" r="140" fill="rgba(255,255,255,.06)"></circle>
+          <circle cx="330" cy="200" r="140" fill="rgba(181,171,252,.14)"></circle>
+          <circle cx="190" cy="200" r="140" fill="none" stroke="#FFFFFF" stroke-width="10" pathLength="1" stroke-dasharray="1" style="animation:nv-draw 1.6s .3s cubic-bezier(.6,0,.3,1) both"></circle>
+          <circle cx="330" cy="200" r="140" fill="none" stroke="#B5ABFC" stroke-width="10" pathLength="1" stroke-dasharray="1" style="animation:nv-draw 1.6s .6s cubic-bezier(.6,0,.3,1) both"></circle>
+        </svg>
+        <div style="position:absolute;left:7%;top:43%;font-size:15px;font-weight:700;color:#FFFFFF;animation:nv-in .8s 1.2s both">Plataforma</div>
+        <div style="position:absolute;right:9%;top:43%;font-size:15px;font-weight:700;color:#D2CEFD;animation:nv-in .8s 1.4s both">Agência</div>
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)">
+          <div style="animation:nv-pop .6s 1.8s cubic-bezier(.2,.9,.3,1.3) both">
+            <div style="animation:nv-float 5s 2.4s ease-in-out infinite;background:#FFFFFF;color:#1B2140;border-radius:20px;padding:14px 18px;box-shadow:0 20px 40px -20px rgba(0,0,0,.5);text-align:center;min-width:120px">
+              <div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#4A5072">Resultado</div>
+              <div style="font-size:20px;font-weight:700;margin-top:4px">Sua loja</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE PARCERIA -->
+<section style="background:#FFFFFF;border-top:1px solid rgba(44,51,87,.08);border-bottom:1px solid rgba(44,51,87,.08)">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px)">
+    <div data-reveal="1" style="max-width:760px">
+      <div style="font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#2C3357">Por que parceria importa</div>
+      <h2 style="margin:14px 0 0;font-size:clamp(34px,4.4vw,60px);line-height:1.04;letter-spacing:-.02em;font-weight:700">Você não está escolhendo só uma plataforma. Está escolhendo quem vai estar ao seu lado.</h2>
+    </div>
+    <div class="nv-4" style="margin-top:56px">
+      <sc-for list="{{ why }}" as="w" hint-placeholder-count="4">
+        <article data-reveal="1" data-delay="{{ w.delay }}" class="nv-card nv-pad" style="background:#F7F8FC;border:1px solid rgba(44,51,87,.1);border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:16px">
+          <div style="width:52px;height:52px;border-radius:16px;background:#2C3357;display:flex;align-items:center;justify-content:center">
+            <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ w.icon }}"></path></svg>
+          </div>
+          <h3 style="margin:0;font-size:22px;line-height:1.2;font-weight:700">{{ w.t }}</h3>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#4A5072">{{ w.d }}</p>
+        </article>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- IPANEMA -->
+<section id="ipanema" style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px)">
+  <div class="nv-2">
+    <div data-reveal="1">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#2C3357;color:#FFFFFF;border-radius:100px;padding:7px 14px;font-size:13px;font-weight:600;letter-spacing:.04em">Novo · Layout Ipanema</div>
+      <h2 style="margin:18px 0 0;font-size:clamp(36px,4.6vw,64px);line-height:1.02;letter-spacing:-.02em;font-weight:700">O layout é seu. 100% personalizável, sem depender de ninguém.</h2>
+      <p style="margin:22px 0 0;font-size:18px;line-height:1.65;color:#4A5072;max-width:560px">O Ipanema é o layout da Nuvemshop construído inteiro com seções e blocos, com edição visual direto na prévia da loja. A Tec3 monta a base com a sua marca e entrega a loja para você mudar o que quiser, quando quiser.</p>
+      <ul class="nv-feat" style="list-style:none;margin:32px 0 0;padding:0">
+        <sc-for list="{{ ipanema }}" as="f" hint-placeholder-count="6">
+          <li style="display:flex;gap:12px;align-items:flex-start;background:#FFFFFF;border:1px solid rgba(44,51,87,.1);border-radius:18px;padding:16px 18px">
+            <span aria-hidden="true" style="flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:#D9F36A;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B2140" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
+            <span style="font-size:15px;line-height:1.5"><b style="font-weight:700">{{ f.t }}</b> {{ f.d }}</span>
+          </li>
+        </sc-for>
+      </ul>
+      <p style="margin:18px 0 0;font-size:13px;color:#6A6F8C">Fonte: <a href="https://www.nuvemshop.com.br/solucoes/novo-editor" style="text-decoration:underline">Nuvemshop · Editor com IA</a> e <a href="https://atendimento.nuvemshop.com.br/pt_BR/layout-ipanema/como-personalizar-meu-layout-ipanema-na-nuvemshop" style="text-decoration:underline">Central de Atendimento</a></p>
+    </div>
+
+    <!-- mini editor animado -->
+    <div data-reveal="1" data-delay="120" aria-hidden="true" style="background:#FFFFFF;border:1px solid rgba(44,51,87,.12);border-radius:28px;box-shadow:0 40px 80px -46px rgba(44,51,87,.55);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid rgba(44,51,87,.1)">
+        <span style="width:10px;height:10px;border-radius:50%;background:#DDE1F0"></span><span style="width:10px;height:10px;border-radius:50%;background:#DDE1F0"></span><span style="width:10px;height:10px;border-radius:50%;background:#DDE1F0"></span>
+        <span style="margin-left:10px;font-size:12px;font-weight:600;color:#4A5072">Editor · Ipanema</span>
+        <span style="margin-left:auto;background:#2C3357;color:#FFFFFF;border-radius:100px;padding:5px 12px;font-size:11px;font-weight:600">Publicar</span>
+      </div>
+      <div style="display:grid;grid-template-columns:38% 62%;min-height:340px">
+        <div style="border-right:1px solid rgba(44,51,87,.1);padding:16px;display:flex;flex-direction:column;gap:10px;position:relative">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6A6F8C">Seções</div>
+          <div style="font-size:13px;font-weight:600;background:#F7F8FC;border-radius:10px;padding:10px 12px">Cabeçalho</div>
+          <div style="font-size:13px;font-weight:600;background:#EEF0F7;border-radius:10px;padding:10px 12px;border:1.5px solid #2C3357;animation:nv-swap 6s ease-in-out infinite">Banner principal</div>
+          <div style="font-size:13px;font-weight:600;background:#F7F8FC;border-radius:10px;padding:10px 12px;animation:nv-swap2 6s ease-in-out infinite">Vitrine</div>
+          <div style="font-size:13px;font-weight:600;background:#F7F8FC;border-radius:10px;padding:10px 12px">Depoimentos</div>
+          <div style="font-size:13px;font-weight:600;background:#F7F8FC;border-radius:10px;padding:10px 12px">Rodapé</div>
+          <svg width="22" height="22" viewBox="0 0 24 24" style="position:absolute;left:62%;top:96px;animation:nv-cursor 6s ease-in-out infinite"><path d="M4 2l16 9-7 2-3 7z" fill="#1B2140" stroke="#FFFFFF" stroke-width="1.5"></path></svg>
+        </div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:10px;background:#F7F8FC">
+          <div style="height:16px;width:40%;border-radius:6px;background:#DDE1F0"></div>
+          <div style="height:120px;border-radius:14px;animation:nv-color 6s ease-in-out infinite;display:flex;align-items:flex-end;padding:12px"><span style="background:#1B2140;color:#FFFFFF;font-size:10px;font-weight:700;border-radius:100px;padding:5px 10px">COMPRAR</span></div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+            <div style="height:70px;border-radius:10px;background:#FFFFFF;border:1px solid rgba(44,51,87,.1)"></div>
+            <div style="height:70px;border-radius:10px;background:#FFFFFF;border:1px solid rgba(44,51,87,.1)"></div>
+            <div style="height:70px;border-radius:10px;background:#FFFFFF;border:1px solid rgba(44,51,87,.1)"></div>
+          </div>
+          <div style="height:10px;width:70%;border-radius:6px;background:#DDE1F0"></div>
+          <div style="height:10px;width:50%;border-radius:6px;background:#DDE1F0"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT -->
+<section id="checkout" style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px)">
+  <div data-reveal="1" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px">
+    <div style="max-width:760px">
+      <div style="font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#2C3357">Checkout Nuvem Pago</div>
+      <h2 style="margin:14px 0 0;font-size:clamp(34px,4.4vw,60px);line-height:1.04;letter-spacing:-.02em;font-weight:700">O checkout é onde a venda acontece. Ou se perde.</h2>
+    </div>
+    <p style="margin:0;max-width:360px;font-size:16px;line-height:1.6;color:#4A5072">Recursos nativos de pagamento da Nuvemshop, sem app extra. A Tec3 configura e testa cada um antes do go-live.</p>
+  </div>
+  <div class="nv-ck" style="margin-top:44px"><div data-reveal="1" data-delay="0" class="nv-card nv-pad" style="background:#FFFFFF;border:1px solid rgba(44,51,87,.1);border-radius:24px;padding:26px"><h3 style="margin:0;font-size:20px;font-weight:700">Checkout transparente</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A5072">O cliente paga sem sair da sua loja: cartão, boleto e Pix no mesmo ambiente.</p></div><div data-reveal="1" data-delay="70" class="nv-card nv-pad" style="background:#FFFFFF;border:1px solid rgba(44,51,87,.1);border-radius:24px;padding:26px"><h3 style="margin:0;font-size:20px;font-weight:700">Checkout acelerado</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A5072">Compra em um clique para quem já comprou na rede, que reúne mais de 15 milhões de consumidores.</p></div><div data-reveal="1" data-delay="140" class="nv-card nv-pad" style="background:#FFFFFF;border:1px solid rgba(44,51,87,.1);border-radius:24px;padding:26px"><h3 style="margin:0;font-size:20px;font-weight:700">Botão "Comprar agora"</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A5072">Compra direto da página do produto, sem passar pelo carrinho.</p></div><div data-reveal="1" data-delay="0" class="nv-card nv-pad" style="background:#FFFFFF;border:1px solid rgba(44,51,87,.1);border-radius:24px;padding:26px"><h3 style="margin:0;font-size:20px;font-weight:700">Até 3x mais rápido</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A5072">Finalização de compra mais rápida com o Nuvem Pago, segundo a Nuvemshop.</p></div><div data-reveal="1" data-delay="70" class="nv-card nv-pad" style="background:#FFFFFF;border:1px solid rgba(44,51,87,.1);border-radius:24px;padding:26px"><h3 style="margin:0;font-size:20px;font-weight:700">Antifraude incluso</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A5072">Camada de antifraude que aprova mais pedidos com segurança.</p></div><div data-reveal="1" data-delay="140" class="nv-card nv-pad" style="background:#FFFFFF;border:1px solid rgba(44,51,87,.1);border-radius:24px;padding:26px"><h3 style="margin:0;font-size:20px;font-weight:700">Ativação sem programador</h3><p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A5072">É só ativar o Nuvem Pago em Meios de Pagamento, no painel.</p></div></div>
+  <p style="margin:18px 0 0;font-size:13px;color:#6A6F8C">Números informados pela Nuvemshop. Fonte: <a href="https://www.nuvemshop.com.br/funcionalidades/checkout-transparente" style="text-decoration:underline">Checkout transparente Nuvem Pago</a>.</p>
+</section>
+
+<!-- NUVEM NEXT -->
+<section id="next" style="padding:0 clamp(12px,2vw,24px)">
+  <div style="background:#2C3357;color:#FFFFFF;border-radius:40px;overflow:hidden">
+    <div class="nv-2" style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,4vw,48px)">
+      <div data-reveal="1">
+        <span style="display:inline-flex;align-items:center;gap:8px;background:#D9F36A;color:#1B2140;border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Para operações que estão crescendo</span>
+        <h2 style="margin:18px 0 0;font-size:clamp(40px,5.6vw,80px);line-height:.98;letter-spacing:-.02em;font-weight:700">Nuvemshop Next</h2>
+        <p style="margin:18px 0 0;font-size:19px;line-height:1.6;color:rgba(255,255,255,.82);max-width:520px">O plano enterprise da Nuvemshop, para marcas que precisam de mais estrutura, mais velocidade e suporte de verdade nos momentos que importam.</p>
+        <div aria-hidden="true" style="margin-top:32px;display:inline-flex;align-items:center;gap:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:16px 20px">
+          <span style="width:46px;height:46px;border-radius:14px;background:#25D366;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"></path></svg></span>
+          <span><b style="display:block;font-size:22px">Até 1 hora</b><span style="font-size:14px;color:rgba(255,255,255,.75)">no WhatsApp, inclusive fim de semana</span></span>
+        </div>
+      </div>
+      <div data-reveal="1" data-delay="120"><ul style="list-style:none;margin:20px 0 0;padding:0"><li style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.15);font-size:16px;line-height:1.5"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#D9F36A;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16172B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span><span>Atendimento prioritário via WhatsApp, com resposta em até 1 hora, inclusive aos fins de semana</span></li><li style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.15);font-size:16px;line-height:1.5"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#D9F36A;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16172B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span><span>Gerente de contas dedicado, com reuniões periódicas de acompanhamento</span></li><li style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.15);font-size:16px;line-height:1.5"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#D9F36A;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16172B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span><span>Migração assistida, com redirecionamentos 301 e preservação dos IDs de produto</span></li><li style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.15);font-size:16px;line-height:1.5"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#D9F36A;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16172B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span><span>Isenção da tarifa por venda usando o Nuvem Pago</span></li><li style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.15);font-size:16px;line-height:1.5"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#D9F36A;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16172B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span><span>Nuvem Envio com mais de 30 transportadoras</span></li><li style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid rgba(255,255,255,.15);font-size:16px;line-height:1.5"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#D9F36A;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16172B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span><span>APIs abertas para ERP, CRM, WMS e marketplaces</span></li></ul>
+        <p style="margin:18px 0 0;font-size:13px;color:rgba(255,255,255,.6)">Fonte: <a href="https://www.nuvemshop.com.br/next" style="text-decoration:underline">Nuvemshop Next</a>. Condições de atendimento conforme o plano contratado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPLANTAÇÃO -->
+<section id="implantacao" style="background:#EEF0F7">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px)">
+    <div data-reveal="1" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px">
+      <div style="max-width:720px">
+        <div style="font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#2C3357">Implantação Tec3</div>
+        <h2 style="margin:14px 0 0;font-size:clamp(34px,4.4vw,60px);line-height:1.04;letter-spacing:-.02em;font-weight:700">Do diagnóstico ao go-live, um caminho só.</h2>
+      </div>
+      <p style="margin:0;max-width:380px;font-size:17px;line-height:1.6;color:#4A5072">Cada etapa tem responsável, prazo combinado no diagnóstico e acompanhamento da Tec3.</p>
+    </div>
+    <div style="position:relative;margin-top:56px">
+      <div aria-hidden="true" style="position:absolute;left:23px;top:8px;bottom:8px;width:2px;background:rgba(44,51,87,.18)"></div>
+      <div aria-hidden="true" data-reveal="1" style="position:absolute;left:23px;top:8px;bottom:8px;width:2px;background:#2C3357;transform-origin:top;animation:nv-grow 2.4s .2s cubic-bezier(.4,0,.2,1) both"></div>
+      <ol style="list-style:none;margin:0;padding:0;position:relative">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="7">
+        <li data-reveal="1" data-delay="{{ s.delay }}" style="position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);gap:20px;padding:0 0 28px">
+          <span style="position:relative;z-index:1;width:48px;height:48px;border-radius:50%;background:{{ s.bg }};color:{{ s.fg }};display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:2px solid #2C3357">{{ s.n }}</span>
+          <div class="nv-pad" style="background:#FFFFFF;border-radius:22px;padding:22px 26px">
+            <h3 style="margin:0;font-size:21px;font-weight:700">{{ s.t }}</h3>
+            <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#4A5072">{{ s.d }}</p>
+          </div>
+        </li>
+      </sc-for>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px)">
+  <div data-reveal="1" style="font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#2C3357">Só para clientes Tec3</div>
+  <h2 data-reveal="1" style="margin:14px 0 48px;font-size:clamp(34px,4.4vw,60px);line-height:1.04;letter-spacing:-.02em;font-weight:700;max-width:760px">Benefícios de entrar pela porta da parceria.</h2>
+  <div class="nv-4">
+    <sc-for list="{{ perks }}" as="p" hint-placeholder-count="4">
+      <div data-reveal="1" data-delay="{{ p.delay }}" class="nv-card nv-pad" style="background:{{ p.bg }};color:{{ p.fg }};border-radius:28px;padding:32px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;gap:20px">
+        <div style="font-size:clamp(34px,3.4vw,48px);font-weight:700;letter-spacing:-.02em;line-height:1">{{ p.big }}</div>
+        <div style="font-size:16px;line-height:1.5">{{ p.d }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:#FFFFFF;border-top:1px solid rgba(44,51,87,.08)">
+  <div style="max-width:880px;margin:0 auto;padding:clamp(72px,9vw,120px) clamp(20px,4vw,48px)">
+    <h2 data-reveal="1" style="margin:0 0 32px;font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-.02em;font-weight:700">Perguntas frequentes</h2>
+    <sc-for list="{{ faq }}" as="q" hint-placeholder-count="5">
+      <details style="border-top:1px solid rgba(44,51,87,.14)">
+        <summary style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;min-height:44px;font-size:19px;font-weight:600">{{ q.q }}<span class="nv-plus" aria-hidden="true" style="flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:#EEF0F7;display:flex;align-items:center;justify-content:center;font-size:20px;color:#2C3357">+</span></summary>
+        <p style="margin:0 0 22px;font-size:16px;line-height:1.65;color:#4A5072;max-width:720px">{{ q.a }}</p>
+      </details>
+    </sc-for>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:0 clamp(12px,2vw,24px) clamp(12px,2vw,24px)">
+  <div data-reveal="1" style="background:#EEF0F7;border-radius:40px;padding:clamp(48px,7vw,96px) clamp(24px,5vw,72px);display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:space-between">
+    <div style="max-width:720px">
+      <img src="assets/logo-nuvemshop.png" alt="Nuvemshop" style="height:56px;width:auto;display:block;margin-bottom:24px">
+      <h2 style="margin:0;font-size:clamp(36px,5vw,72px);line-height:1;letter-spacing:-.02em;font-weight:700">Vamos tirar sua loja do papel na Nuvemshop?</h2>
+      <p style="margin:18px 0 0;font-size:18px;line-height:1.6;color:#4A5072">Conta o momento da sua marca. A gente indica o melhor caminho, sem compromisso.</p>
+    </div>
+    <div class="nv-ctas" style="display:flex;flex-wrap:wrap;gap:12px">
+      <a class="nv-btn" href="{{ wa }}" style="background:#2C3357;color:#FFFFFF;border-radius:100px;padding:19px 30px;font-size:17px;font-weight:600;display:inline-flex">Falar com a Tec3</a>
+      <a href="index.html" style="border:1.5px solid #2C3357;border-radius:100px;padding:18px 26px;font-size:17px;font-weight:600;display:inline-flex">Voltar ao site</a>
+    </div>
+  </div>
+  <p style="max-width:1280px;margin:24px auto 0;padding:0 clamp(8px,2vw,24px);font-size:13px;color:#6A6F8C">Nuvemshop e o logo Nuvemshop são marcas da Nuvemshop. Condições de benefícios sujeitas às regras vigentes do programa de parceiros.</p>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"whatsappLink":{"editor":"text","default":"https://wa.me/5547988136038?text=Quero%20implantar%20minha%20loja%20na%20Nuvemshop%20com%20a%20Tec3"},"$preview":{"width":1440,"height":5600}}'>
+class Component extends DCLogic {
+  state = { menuOpen: false };
+  componentDidMount() {
+    if (!('IntersectionObserver' in window)) return;
+    this.t = setTimeout(() => {
+      const vh = window.innerHeight || 800;
+      this.io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          const d = +(e.target.getAttribute('data-delay') || 0);
+          e.target.animate([{ opacity: 0, transform: 'translateY(26px)' }, { opacity: 1, transform: 'none' }], { duration: 800, delay: d, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' });
+          this.io.unobserve(e.target);
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('[data-reveal]').forEach(el => { if (el.getBoundingClientRect().top > vh) this.io.observe(el); });
+    }, 250);
+  }
+  componentWillUnmount() { clearTimeout(this.t); if (this.io) this.io.disconnect(); }
+
+  navVals(cur) {
+    const go = (open) => () => { this.setState({ menuOpen: open }); try { document.body.style.overflow = open ? 'hidden' : ''; } catch (e) {} };
+    const D = [['nuvemshop', 'Nuvemshop', 'nuvemshop.html'], ['olist', 'Olist', 'olist.html'], ['marketplaces', 'Marketplaces', 'marketplaces.html'], ['trafego', 'Tráfego pago', 'trafego.html'], ['teca', 'TEC·A', 'teca.html']];
+    const M = [['inicio', 'Início', 'index.html']].concat(D, [['connect', 'TEC3 Connect', 'connect.html']]);
+    const mk = ([id, label, href], i) => ({ label, href, current: id === cur ? 'page' : 'false', fg: id === cur ? '#5B4FB0' : '#16172B', n: String(i + 1).padStart(2, '0'), delay: (0.05 + i * 0.05).toFixed(2) + 's' });
+    const open = !!(this.state && this.state.menuOpen);
+    return {
+      menuOpen: open, menuExpanded: open ? 'true' : 'false', openMenu: go(true), closeMenu: go(false),
+      navItems: D.map(mk), menuItems: M.map(mk),
+      connectCurrent: cur === 'connect' ? 'page' : 'false',
+      connectBg: cur === 'connect' ? '#16172B' : '#D9F36A', connectFg: cur === 'connect' ? '#D9F36A' : '#16172B'
+    };
+  }
+  renderVals() {
+    return {
+      ...this.navVals('nuvemshop'),
+      wa: this.props.whatsappLink ?? 'https://wa.me/5547988136038?text=Quero%20implantar%20minha%20loja%20na%20Nuvemshop%20com%20a%20Tec3',
+      why: [
+        { t: 'Conhecimento de dentro', d: 'Quem é parceira acompanha as novidades da plataforma de perto e sabe o melhor jeito de usar cada recurso.', icon: 'M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z', delay: 0 },
+        { t: 'Benefícios exclusivos', d: 'Condições especiais que a Tec3 conquistou como parceira e repassa para a sua operação.', icon: 'M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7c-2-4-6-4-6-1s6 1 6 1zm0 0c2-4 6-4 6-1s-6 1-6 1z', delay: 80 },
+        { t: 'Implantação sem improviso', d: 'Configuração, integrações e layout feitos por quem implanta lojas na Nuvemshop todo mês.', icon: 'M4 6h16M4 12h10M4 18h7M17 15l2 2 4-4', delay: 160 },
+        { t: 'Ninguém some no go-live', d: 'Depois que a loja vai ao ar, a Tec3 continua junto, com melhorias e suporte direto.', icon: 'M21 12a9 9 0 1 1-3-6.7M21 4v5h-5', delay: 240 }
+      ],
+      ipanema: [
+        { t: 'Seções e blocos:', d: 'adicione, reordene, oculte e duplique em qualquer página.' },
+        { t: 'Edição visual:', d: 'tudo direto na prévia da loja, sem código.' },
+        { t: 'Estilos globais:', d: 'cores, fontes e botões definidos uma vez para a loja inteira.' },
+        { t: 'Rascunhos seguros:', d: 'teste versões sem mexer na loja publicada.' },
+        { t: 'Editor com IA:', d: 'peça a mudança e veja o resultado antes de publicar.' },
+        { t: 'Código quando precisar:', d: 'CSS e acesso avançado para projetos sob medida.' }
+      ],
+      steps: [
+        { n: '1', t: 'Diagnóstico', d: 'Entendemos o seu produto, o catálogo e os canais de venda. Aqui definimos escopo e cronograma.' },
+        { n: '2', t: 'Criação da loja', d: 'Abertura da loja pelo link da Tec3, com o benefício de 25% OFF no 1º mês de qualquer plano pago.' },
+        { n: '3', t: 'Layout no Ipanema', d: 'Montamos o layout com a sua marca, pensado primeiro para o celular.' },
+        { n: '4', t: 'Integrações', d: 'ERP Olist Tiny, meios de pagamento, frete e marketplaces conversando com a loja.' },
+        { n: '5', t: 'Migração', d: 'Se você já vende em outra plataforma: produtos, clientes, pedidos e SEO, sem parar de vender.' },
+        { n: '6', t: 'Go-live acompanhado', d: 'Testes de compra, checkout e frete antes de abrir as portas.' },
+        { n: '7', t: 'Autonomia', d: 'Treinamento para você editar o Ipanema sozinha, com a Tec3 por perto.' }
+      ].map((s, i) => ({ ...s, delay: i * 70, bg: i === 6 ? '#2C3357' : '#FFFFFF', fg: i === 6 ? '#FFFFFF' : '#2C3357' })),
+      perks: [
+        { big: '25% OFF', d: 'no 1º mês de qualquer plano pago, criando a loja pelo link da Tec3.', bg: '#2C3357', fg: '#FFFFFF', delay: 0 },
+        { big: 'Migração paga', d: 'pela Nuvemshop para lojas que faturam mais de R$ 50 mil.', bg: '#D9F36A', fg: '#1B2140', delay: 80 },
+        { big: 'SEO preservado', d: 'redirecionamento das URLs antigas para não perder posição no Google.', bg: '#FFFFFF', fg: '#1B2140', delay: 160 },
+        { big: 'Sem parar', d: 'a loja antiga segue no ar até a nova estar validada.', bg: '#E9E6FD', fg: '#1B2140', delay: 240 }
+      ],
+      faq: [
+        { q: 'Preciso saber programar para mudar o layout?', a: 'Não. No Ipanema a edição é visual, direto na prévia da loja. O código fica disponível só para quem quiser ir além.' },
+        { q: 'O layout Ipanema tem custo extra?', a: 'Segundo a Nuvemshop, o novo editor está incluído em todos os planos. O que você contrata com a Tec3 é a implantação e o acompanhamento.' },
+        { q: 'Já vendo em outra plataforma. Vou perder algo?', a: 'Levamos produtos, clientes, pedidos e imagens, e redirecionamos as URLs antigas para preservar o SEO. A loja antiga fica no ar até a nova estar validada.' },
+        { q: 'Quanto tempo leva a implantação?', a: 'Depende do tamanho do catálogo e das integrações. O cronograma é definido no diagnóstico, antes de começar.' },
+        { q: 'E depois que a loja estiver no ar?', a: 'Você tem autonomia para editar, e a Tec3 segue disponível para melhorias, datas comerciais e novas integrações.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
