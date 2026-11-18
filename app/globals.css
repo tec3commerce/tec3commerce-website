@@ -1,2 +1,33 @@
-*{box-sizing:border-box}
-body{margin:0;background:#F5F4FA;color:#16172B;-webkit-font-smoothing:antialiased}
+/* Tokens e reset globais */
+
+:root {
+  --font-sans: 'Nexa', 'Montserrat', system-ui, sans-serif;
+  --font-serif: Lora, Georgia, serif;
+
+  --ink: #16172b;
+  --paper: #f5f4fa;
+  --violet: #5b4fb0;
+  --lime: #d9f36a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fundo do body nas páginas com paleta própria (aparece no overscroll) */
+body:has([data-page='nuvemshop']) {
+  background: #f7f8fc;
+  color: #1b2140;
+}
+
+body:has([data-page='teca']) {
+  background: #f3ede2;
+  color: #17110f;
+}
