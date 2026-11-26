@@ -37,7 +37,27 @@ components/
   teca/TecaHeader.tsx        cabeçalho e menu próprios da TEC·A (usa app/teca/page.module.css)
 content/<pagina>.ts          textos e listas de cada página
 public/assets/               imagens, logos e vídeos
+
+app/(conta)/                 área logada (o grupo "(conta)" não aparece na URL)
+  layout.tsx                 SessionProvider + noindex
+  login/, esqueci-senha/, redefinir-senha/
+  area-do-cliente/           só para clientes logados
+  admin/                     só para o admin
+components/auth/             sessão, molduras (AuthShell, PortalShell) e estilos dos formulários
+lib/api.ts                   cliente da API (tokens, renovação automática da sessão)
 ```
+
+### Área do cliente e admin
+
+Essas páginas conversam com a API do repositório `tec3_site_back`. Configure o endereço dela em
+`NEXT_PUBLIC_API_URL` (veja `.env.example`; sem a variável, usa `http://localhost:3333`).
+Na Netlify, defina `NEXT_PUBLIC_API_URL=https://api.tec3commerce.com.br`.
+
+A sessão fica num cookie da API, então o site precisa estar no mesmo domínio dela
+(`tec3commerce.com.br` e `api.tec3commerce.com.br`). Pelo endereço `*.netlify.app` o login não se mantém.
+
+A proteção das rotas é feita no navegador pelo `PortalShell`: sem sessão vai para `/login?next=...`;
+logado com o papel errado vai para a própria área. Quem garante o acesso aos dados é a API.
 
 ### Onde editar
 

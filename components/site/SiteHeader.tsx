@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { PORTAL_ENABLED } from '@/lib/portal';
 import styles from './SiteHeader.module.css';
 
 export type PageId = 'inicio' | 'nuvemshop' | 'olist' | 'marketplaces' | 'trafego' | 'teca' | 'connect';
@@ -61,6 +62,11 @@ export default function SiteHeader({ current, wa }: Props) {
             </Link>
           </div>
           <div className={styles.actions}>
+            {PORTAL_ENABLED && (
+              <Link className={styles.clientLink} href="/login">
+                Área do cliente
+              </Link>
+            )}
             <a className={`${styles.pill} ${styles.cta}`} href={wa}>
               Fale com a gente
             </a>
@@ -119,9 +125,11 @@ export default function SiteHeader({ current, wa }: Props) {
             <a href={wa} onClick={close} className={styles.menuWhatsapp}>
               Fale com a gente no WhatsApp
             </a>
-            <Link href="/#area" onClick={close} className={styles.menuClient}>
-              Área do cliente
-            </Link>
+            {PORTAL_ENABLED && (
+              <Link href="/login" onClick={close} className={styles.menuClient}>
+                Área do cliente
+              </Link>
+            )}
           </div>
         </div>
       )}

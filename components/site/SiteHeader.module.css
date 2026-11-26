@@ -114,6 +114,19 @@
   gap: 10px;
 }
 
+.clientLink {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 10px 8px;
+  transition: color 0.2s;
+}
+
+.clientLink:hover {
+  color: var(--violet);
+}
+
 .cta {
   background: var(--ink);
   color: var(--paper);
@@ -147,6 +160,10 @@
   }
   .burger {
     display: inline-flex;
+  }
+  /* no mobile o link fica dentro do menu */
+  .clientLink {
+    display: none;
   }
 }
 

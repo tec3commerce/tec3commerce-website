@@ -4,6 +4,7 @@ import SiteHeader from '@/components/site/SiteHeader';
 import LiveViewers from '@/components/site/LiveViewers';
 import PageEffects from '@/components/site/PageEffects';
 import { vals } from '@/content/index';
+import { PORTAL_ENABLED } from '@/lib/portal';
 import styles from './page.module.css';
 
 export const metadata: Metadata = { title: 'Tec3 Commerce · Site' };
@@ -453,10 +454,15 @@ export default function Page() {
                 <div className={`${styles.ctas} ${styles.areaRow}`}>
                   <a className={`${styles.btn} ${styles.areaButton}`} href={vals.wa}>
                     Chamar no WhatsApp
-                  </a>{' '}
-                  <a className={`${styles.btn} ${styles.ghost} ${styles.areaButton2}`} href="#area">
-                    Já sou cliente · Área do cliente
                   </a>
+                  {PORTAL_ENABLED && (
+                    <>
+                      {' '}
+                      <Link className={`${styles.btn} ${styles.ghost} ${styles.areaButton2}`} href="/login">
+                        Já sou cliente · Área do cliente
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -476,9 +482,11 @@ export default function Page() {
               <a className={`${styles.link} ${styles.footerLink}`} href="#nuvemshop">
                 Nuvemshop
               </a>
-              <a className={`${styles.link} ${styles.footerLink}`} href="#area">
-                Área do cliente
-              </a>
+              {PORTAL_ENABLED && (
+                <Link className={`${styles.link} ${styles.footerLink}`} href="/login">
+                  Área do cliente
+                </Link>
+              )}
             </div>
             <div className={styles.footerStack}>
               <span className={styles.footerEyebrow}>TEC·A</span>
